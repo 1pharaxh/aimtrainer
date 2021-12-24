@@ -1,0 +1,4 @@
+docopt>=0.5
+packbits
+exifread
+PyBundle

@@ -3,7 +3,11 @@ from ursina import * # import as usual
 app = Ursina()       # create app as usual
 grid_texture = load_texture('Assets\Textures\grid_texture.jpg')
 
-ground = Entity(model='plane', color=color.rgb(255,250,240), texture='grid_texture', collider='mesh', scale=(100,1,100)) # rgb vals for floral white
+ground = Entity(model='plane', 
+                color=color.rgb(255,250,240), 
+                texture='grid_texture', 
+                collider='mesh', 
+                scale=(100,1,100)) # rgb vals for floral white
 player = FirstPersonController()
 
 box = Entity(model='cube',        #replace this for a gun.

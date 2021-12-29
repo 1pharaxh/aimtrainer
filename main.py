@@ -1,4 +1,5 @@
 # CODE AUTHOR: Akarshan Mishra
+# This code is open source feel free to tweak around.
 from ursina import *
 from random import uniform
 from ursina import texture_importer

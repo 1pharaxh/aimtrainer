@@ -18,7 +18,7 @@ cubes=[]
 # Sphere list containing all sphere entity objects.                       
 spheres =[]
 # pistol list containing all pistol entity objects.                    
-pistols=[]
+pistols=[] 
 # shotguns list containing all shotguns entity objects.                       
 shotguns =[]
 

@@ -1,0 +1,113 @@
+newmtl material_1
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd /Maps/aw.jpg
+
+newmtl material_1_joystick
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.294118 0.294118 0.294118
+Ks 1 1 1
+Km 0
+
+newmtl material_1_l2
+d 1
+Ns 1
+Ni 0
+Ka 1 0 0
+Kd 1 0 0
+Ks 1 1 1
+Km 0
+
+newmtl material_1_lights
+d 1
+Ns 1
+Ni 0
+Ka 0.501961 1 1
+Kd 0.501961 1 1
+Ks 1 1 1
+Km 0
+
+newmtl material_2
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+
+newmtl material_1_panel
+d 1
+Ns 1
+Ni 0
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd /Maps/2q.jpg
+
+newmtl material_2_panel
+d 1
+Ns 1
+Ni 0
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd /Maps/1q.jpg
+
+newmtl material_1_seat
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd /Maps/pod1b.jpg
+
+newmtl default
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+
+newmtl default_miniguns
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd /Maps/2q.jpg
+
+newmtl default_glass
+d 0.8
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0 0 0
+Ks 1 1 1
+Km 0
+
+newmtl default_bullets
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.501961 0.501961 0
+Ks 1 1 1
+Km 0
+

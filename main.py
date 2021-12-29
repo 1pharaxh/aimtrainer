@@ -1,12 +1,10 @@
 ############### TO DO : ###############
 ######### ADD MUSIC AND MENUS #########
-######### IMPROVE COLORS ##############
-######### WORK ON UPDATES 1 & 2 #######
-
 from ursina import *
 from random import uniform
+from ursina import texture_importer
 from ursina.prefabs.first_person_controller import FirstPersonController
-app=Ursina()
+app=Ursina(boderless=False)
 # Sentinel flag for spawning cubes (for flick training !).
 run_cube = False         
 # Sentinel flag for moving spheres (for tracking training !).
@@ -75,18 +73,36 @@ def update():
         for p in pistols:
             pistols.remove(p)
             destroy(p)
-# Sentinel values for clicks, score and final score
-# used later on to calculate the final score
+# Sentinel values for clicks, score, final score
+# and lives used later on to calculate the final score
+# and remaining lives.
 clicks = 0
 score = 0
 final_score = 0
+lives = 3
 # This function reads keyboard and mouse input
 # when '1' is pressed then cubes are spawned.
 # when '2' is pressed then spheres are spawned.
 # when '3' is pressed then pistol is spawned.
 # when '4' is pressed then shotgun is spawned.
+heart1 = Entity(model='quad', 
+               parent=camera.ui,
+               position = (-0.8,0.45),
+               scale=0.1,
+               texture='Assets\Textures\heart')
+heart2 = Entity(model='quad', 
+               parent=camera.ui,
+               position = (-0.7,0.45),
+               scale=0.1,
+               texture='Assets\Textures\heart')
+heart3 = Entity(model='quad', 
+               parent=camera.ui,
+               position = (-0.6,0.45),
+               scale=0.1,
+               texture='Assets\Textures\heart')
+scoreList = []
 def input(key):
-    global cubes, spheres, pistols, shotguns, spawn_pistol, spawn_shotgun, run_cube, run_sphere, clicks, score, final_score
+    global cubes, spheres, pistols, shotguns, spawn_pistol, spawn_shotgun, run_cube, run_sphere, clicks, score, final_score, lives, scoreList
     if not run_cube:
         # Pressing '1' calls the new_cube function
         if key == '1':   
@@ -135,10 +151,30 @@ def input(key):
             final_score += 1
         else:
             final_score = score
-        # Displaying text on every mouse click.
-        popup = Text('Score '+str(final_score), scale=2, color=color.red, origin =(0,-8))
-        # Text is removed every 3 miliseconds of displaying.
-        destroy(popup, delay=.3)
+        if clicks > final_score:
+            scoreList.append(final_score)
+            final_score, clicks, score = 0,0,0
+            lives -= 1
+        if lives == 2:
+            destroy(heart3)
+        if lives == 1:
+            destroy(heart2)
+        if lives > 0:
+            # Displaying text on every mouse click.
+            popup = Text('Score '+str(final_score), scale=2, color=color.red, origin =(0,-8))
+            # Text is removed every 3 miliseconds of displaying.
+            destroy(popup, delay=.3)
+        if lives == 0:
+            # When lives are 0 then calling the exitGame function after 10 seconds.
+            destroy(heart1)
+            gameover = Text('GAMEOVER', scale=5, color=color.blue, origin=(0,0))
+            exitText = Text('exiting in 10 seconds',origin=(0,4), scale=2)
+            final=Text('Your High Score '+str(max(scoreList)), scale=2, color=color.red, origin =(0,-8))
+            invoke(exitGame, delay=10)
+
+# This function quits game when invoked.
+def exitGame():
+    exit()
 # Function to make cube entities.
 def new_cube():
     global cubes, run_cube
@@ -213,14 +249,30 @@ ground=Entity(model='plane',
               texture="grid_texture", 
               texture_scale=(1, 1), 
               collider='box')
-# Generating the wall.
-wall_1=Entity(model="cube", 
+# Generating the robot.
+robot=Entity(model="Assets\Models\Robo warrior\Robo warrior", 
               collider="box", 
-              position=(-2, 0, 0), 
-              scale=(8, 5, 1), 
-              rotation=(0,90,0),
-              texture="brick", 
-              texture_scale=(5,5), 
-              color=color.red)
+              scale=0.1,
+              position=(-30, -2, 0),
+              rotation=(0,50,0),
+              texture="white_cube",
+              color=color.violet,
+              highlight_color=color.pink)
+tank=Entity(model="Assets\Models\WWII_Tank_Germany_Panzer_III_v1\WWII_Tank_Germany_Panzer_III_v1_L2.obj", 
+              collider="box", 
+              scale=4,
+              position=(30, -3, 30),
+              rotation=(270,100,0),
+              texture="white_cube",
+              color=color.violet,
+              highlight_color=color.pink)
 
+# Generating the crosshair
+crosshair = Entity(model='quad', 
+               parent=camera.ui,
+               position = (0,0),
+               scale=0.050,
+               texture='Assets\Textures\crosshair')
+#making full screen
+window.fullscreen=True
 app.run()

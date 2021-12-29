@@ -22,6 +22,8 @@ pistols=[]
 # shotguns list containing all shotguns entity objects.                       
 shotguns =[]
 
+Audio("Assets\Audio\Ghostrunner Soundtrack - Truth to Power.ogg", loop=True, volume=0.5)
+
 # Update function for:
 # a) Spawning multiple cubes if run_cube is True.
 # b) Moving spheres up if run_sphere is True.                      

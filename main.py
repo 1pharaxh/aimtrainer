@@ -258,14 +258,6 @@ robot=Entity(model="Assets\Models\Robo warrior\Robo warrior",
               texture="white_cube",
               color=color.violet,
               highlight_color=color.pink)
-tank=Entity(model="Assets\Models\WWII_Tank_Germany_Panzer_III_v1\WWII_Tank_Germany_Panzer_III_v1_L2.obj", 
-              collider="box", 
-              scale=4,
-              position=(30, -3, 30),
-              rotation=(270,100,0),
-              texture="white_cube",
-              color=color.violet,
-              highlight_color=color.pink)
 
 # Generating the crosshair
 crosshair = Entity(model='quad', 

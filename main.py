@@ -1,5 +1,4 @@
 ############### TO DO : ###############
-######### IMPROVE TEXTURES ############
 ######### ADD MUSIC AND MENUS #########
 ######### IMPROVE COLORS ##############
 ######### WORK ON UPDATES 1 & 2 #######
@@ -7,21 +6,29 @@
 from ursina import *
 from random import uniform
 from ursina.prefabs.first_person_controller import FirstPersonController
-import time
 app=Ursina()
-# Sentinel flag for spawning cubes (for flick training !)
+# Sentinel flag for spawning cubes (for flick training !).
 run_cube = False         
-# Sentinel flag for moving spheres (for tracking training !)
+# Sentinel flag for moving spheres (for tracking training !).
 run_sphere = False
-# Cube list containing all cube entity onjects.                      
+# Sentinel flag for spawning pistol.
+spawn_pistol = False
+# Sentinel flag for spawning shotgun.
+spawn_shotgun = False
+# Cube list containing all cube entity objects.                    
 cubes=[]
 # Sphere list containing all sphere entity objects.                       
 spheres =[]
+# pistol list containing all pistol entity objects.                    
+pistols=[]
+# shotguns list containing all shotguns entity objects.                       
+shotguns =[]
+
 # Update function for:
 # a) Spawning multiple cubes if run_cube is True.
 # b) Moving spheres up if run_sphere is True.                      
 def update():
-    global cubes,spheres, run_cube, run_sphere
+    global cubes,spheres, pistols, shotguns, run_cube, run_sphere, spawn_pistol, spawn_shotgun
     # Spawning multiple cubes.
     if run_cube: 
         for c in cubes:
@@ -46,28 +53,64 @@ def update():
         for c in cubes:
             cubes.remove(c)
             destroy(c)
+    # Spawning pistol.
+    if spawn_pistol:
+        for p in pistols:
+            # Removing reduant (previously generated pistols)
+            if len(pistols) > 1:
+                pistols.remove(p)
+                destroy(p)
+        # Only working with pistols so no shotguns. 
+        for shotgun1 in shotguns:
+            shotguns.remove(shotgun1)
+            destroy(shotgun1)
+    # Spawning shotgun.
+    if spawn_shotgun:
+        for shotgun1 in shotguns:
+            # Removing reduant (previously generated pistols)
+            if len(shotguns) > 1:
+                shotguns.remove(shotgun1)
+                destroy(shotgun1)
+        # Only working with shotguns so no pistols. 
+        for p in pistols:
+            pistols.remove(p)
+            destroy(p)
 # Sentinel values for clicks, score and final score
 # used later on to calculate the final score
 clicks = 0
 score = 0
 final_score = 0
 # This function reads keyboard and mouse input
-# when '1' is pressed then cubes are spawned
-# when '2' is pressed then spheres are spawned 
+# when '1' is pressed then cubes are spawned.
+# when '2' is pressed then spheres are spawned.
+# when '3' is pressed then pistol is spawned.
+# when '4' is pressed then shotgun is spawned.
 def input(key):
-    global cubes, spheres, run_cube, run_sphere, clicks, score, final_score
+    global cubes, spheres, pistols, shotguns, spawn_pistol, spawn_shotgun, run_cube, run_sphere, clicks, score, final_score
     if not run_cube:
         # Pressing '1' calls the new_cube function
         if key == '1':   
             run_cube = True
             run_sphere = False
-            invoke(new_cube, delay=0.01)
+            invoke(new_cube, delay=0.1)
     if not run_sphere: 
         # Pressing '2' calls the new_sphere function
         if key == '2':
             run_sphere = True
             run_cube = False                
-            invoke(new_sphere, delay=0.1)  
+            invoke(new_sphere, delay=0.1) 
+    if not spawn_pistol: 
+        # Pressing '3' calls the new_pistol function        
+        if key == '3':
+            spawn_pistol = True
+            spawn_shotgun = False
+            invoke(new_pistol, delay=0.1)
+    if not spawn_shotgun:
+        # Pressing '4' calls the new_shotgun function
+        if key == '4':
+            spawn_pistol = False
+            spawn_shotgun = True
+            invoke(new_shotgun, delay=0.1)
     if key=="left mouse down":
         # Everytime on clicking left mouse button
         # value of click increases by 1.
@@ -107,7 +150,9 @@ def new_cube():
                   scale=1, 
                   collider="box", 
                   position=(wx,wy,wz), 
-                  color=color.rgb(192,192,192))
+                  texture='white_cube',
+                  highlight_color=color.violet,
+                  color=color.light_gray)
     cubes.append(cube)
     # Generating more cubes if run_cubes is True using recursion.
     if run_cube:
@@ -129,8 +174,34 @@ def new_sphere():
     if run_sphere:
         # UPDATE 2. can speed up cube generation by modifying the delay
         invoke(new_sphere,delay = random.uniform(1,3))
+# Function to make pistol entity.
+def new_pistol():
+    global pistols, spawn_pistol
+    Pistol=Entity(model="Assets\Models\Colt\colt1911", 
+            parent=camera.ui, 
+            texture=load_texture('Assets\Models\Colt\Colt_M1911_1688'),
+            scale=0.1,
+            position=(.3, -.3),
+            rotation=(90, 85, -5))
+    pistols.append(Pistol)
+    # Generating pistols if spawn_pistol is True using recursion.
+    if spawn_pistol:
+        invoke(new_pistol, delay = 0.1)
+# Function to make shotgun entity.
+def new_shotgun():
+    global shotguns, spawn_shotgun
+    Shotgun=Entity(model="Assets\Models\M1887\M1887", 
+           parent=camera.ui, 
+           texture=load_texture('Assets\Models\M1887\P_PW_M1887_D'),
+           scale=1.3,
+           position=(.3, -.3),
+           rotation=(0, 95, -5))
+    shotguns.append(Shotgun)
+    # Generating shotguns if spawn_shotgun is True using recursion.
+    if spawn_shotgun:
+        invoke(new_shotgun, delay = 0.1)
 # Generating custom sky.
-Sky(texture = load_texture('Assets\Textures\Skybox.png'))
+Sky(texture = load_texture('Assets\Textures\synthwave_retrowave___neon_80s___background_by_rafael_de_jongh_d9wsq5j.jpg'))
 # Loading textures for grid(PNG,JPG OR JPEG would work).
 grid_texture = load_texture('Assets\Textures\grid_texture.jpg')
 # Setting FirstPersonController instance to player
@@ -151,11 +222,5 @@ wall_1=Entity(model="cube",
               texture="brick", 
               texture_scale=(5,5), 
               color=color.red)
-# Generating gun based on custom model.
-gun=Entity(model="Assets\Models\Submachine_Gun_LP_1.obj", 
-           parent=camera.ui, 
-           scale=.001,
-           position=(.3, -.2),
-           rotation=(0, 105, 0),
-           color=color.rgb(166, 220, 237))
+
 app.run()

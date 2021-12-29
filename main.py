@@ -180,9 +180,9 @@ def new_pistol():
     Pistol=Entity(model="Assets\Models\Colt\colt1911", 
             parent=camera.ui, 
             texture=load_texture('Assets\Models\Colt\Colt_M1911_1688'),
-            scale=0.1,
-            position=(.3, -.3),
-            rotation=(90, 85, -5))
+            scale=0.11,
+            position=(.27, -.2),
+            rotation=(100, 170, -90))
     pistols.append(Pistol)
     # Generating pistols if spawn_pistol is True using recursion.
     if spawn_pistol:
@@ -193,7 +193,7 @@ def new_shotgun():
     Shotgun=Entity(model="Assets\Models\M1887\M1887", 
            parent=camera.ui, 
            texture=load_texture('Assets\Models\M1887\P_PW_M1887_D'),
-           scale=1.3,
+           scale=1.4,
            position=(.3, -.3),
            rotation=(0, 95, -5))
     shotguns.append(Shotgun)

@@ -194,8 +194,8 @@ def new_cube():
     cubes.append(cube)
     # Generating more cubes if run_cubes is True using recursion.
     if run_cube:
-        # UPDATE 1. can speed up cube generation by modifying the delay
-        invoke(new_cube,delay = random.uniform(1,3))
+        # Can speed up cube generation by modifying the delay
+        invoke(new_cube,delay = random.uniform(0.7,1.2))
 # Function to make sphere entities.
 def new_sphere():
     global spheres, run_sphere
@@ -210,8 +210,8 @@ def new_sphere():
     spheres.append(sphere)
     # Generating more spheres if run_sphere is True using recursion.
     if run_sphere:
-        # UPDATE 2. can speed up cube generation by modifying the delay
-        invoke(new_sphere,delay = random.uniform(1,3))
+        # Can speed up cube generation by modifying the delay
+        invoke(new_sphere,delay = random.uniform(0.5,1))
 # Function to make pistol entity.
 def new_pistol():
     global pistols, spawn_pistol

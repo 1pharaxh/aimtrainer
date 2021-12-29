@@ -1,5 +1,4 @@
-############### TO DO : ###############
-######### ADD MUSIC AND MENUS #########
+# CODE AUTHOR: Akarshan Mishra
 from ursina import *
 from random import uniform
 from ursina import texture_importer
